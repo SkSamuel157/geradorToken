@@ -1,14 +1,16 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home } from './pages/index'
 import { PaginaSenhas } from './pages/paginaSenhas'
-
+import { Ionicons } from '@expo/vector-icons/'
 
 const Tab = createBottomTabNavigator();
 
 export function Routes() {
     return (
         <Tab.Navigator>
-            <Tab.Screen name="home" component={Home}
+            <Tab.Screen
+                name="home"
+                component={Home}
                 options={{
                     tabBarShowLabel: false,
                     headerShown: false,
@@ -20,8 +22,9 @@ export function Routes() {
                     }
                 }}
             />
-
-            <Tab.Screen name="paginaSenhas" component={PaginaSenhas}
+            <Tab.Screen
+                name="paginaSenhas"
+                component={PaginaSenhas}
                 options={{
                     tabBarShowLabel: false,
                     headerShown: false,
