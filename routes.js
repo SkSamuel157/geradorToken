@@ -3,6 +3,7 @@ import { Home } from './pages/index'
 import { PaginaSenhas } from './pages/paginaSenhas'
 import { Ionicons } from '@expo/vector-icons/'
 
+
 const Tab = createBottomTabNavigator();
 
 export function Routes() {

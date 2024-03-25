@@ -1,15 +1,31 @@
 import { View, StyleSheet, Text, Pressable, TouchableOpacity } from "react-native";
+import * as Clipboard from 'expo-clipboard'
+import Armazenamento from '../hooks/bancoTokens'
 
-export function ModalTokens({ fechar }) {
+export function ModalTokens({ token, fechar }) {
+
+    const { salvarItem } = Armazenamento();
+
+    async function copiarToken() {
+        await Clipboard.setStringAsync(token)
+        alert("Token copiado para área de transferência.")
+        fechar();
+    }
+    async function salvarToken() {
+        await salvarItem("@token", token)
+        alert(`Token ${token} salvo com sucesso`)
+        fechar();
+    }
+
     return (
         <View style={ESTILO.container}>
             <View style={ESTILO.content}>
                 <Text style={ESTILO.title}>
                     Senha Gerada
                 </Text>
-                <Pressable style={ESTILO.innerToken} >
-                    <Text style={ESTILO.text}>
-                        senha
+                <Pressable style={ESTILO.innerToken} onLongPress={copiarToken} >
+                    <Text style={ESTILO.text} selectable={false}>
+                        {token}
                     </Text>
                 </Pressable>
                 <View style={ESTILO.buttonArea}>
@@ -18,7 +34,7 @@ export function ModalTokens({ fechar }) {
                             Voltar
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[ESTILO.button, ESTILO.buttonSave]} >
+                    <TouchableOpacity style={[ESTILO.button, ESTILO.buttonSave]} onPress={salvarToken}>
                         <Text style={ESTILO.buttonSaveText}>
                             Salvar Senha
                         </Text>

@@ -1,21 +1,29 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity, Modal } from "react-native";
+import { ModalTokens } from '../components/modal';
 import Slider from "@react-native-community/slider";
 import { useState } from "react";
-import { ModalTokens } from '../components/modal';
 
+let caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 export function Home() {
     const [qtde, defineQtde] = useState(6);
-    const [telaModal, configTelaModal] = useState(false);
+    const [telaModal, configTelaModal]=useState(false);
+    const [tokenValue, configTokenValue] = useState("")
 
     function gerarToken() {
+        let token = ""
+        for (let i = 0, n = caracteres.length; i < qtde; i++) {
+            token += caracteres.charAt(Math.floor(Math.random() * n))
+        }
+        configTokenValue(token);
         configTelaModal(true);
     }
+
 
     return (
         <View style={ESTILO.container}>
             <Image source={require("../assets/logo.png")} style={ESTILO.logo} />
-            <Text style={ESTILO.caracteres}>
+            <Text style={ESTILO.caracteres} selectable={true}>
                 {qtde} Caracteres
             </Text>
             <View style={ESTILO.area}>
@@ -30,12 +38,12 @@ export function Home() {
                 />
             </View>
             <TouchableOpacity style={ESTILO.button} onPress={gerarToken}>
-                <Text style={ESTILO.buttonText}>
-                    Gerar Senha
-                </Text>
+            <Text style={ESTILO.Text}>
+                Gerar Senha
+            </Text>
             </TouchableOpacity>
             <Modal visible={telaModal} animationType="fade" transparent={true}>
-                <ModalTokens fechar={() => configTelaModal(false)} />
+            <ModalTokens token={tokenValue} fechar={() => configTelaModal(false)} />
             </Modal>
         </View>
     )
@@ -57,7 +65,7 @@ const ESTILO = StyleSheet.create({
         width: "80%",
         backgroundColor: "#FFF",
         borderRadius: 8,
-        padding: 8
+        padding: 8,
     },
     button: {
         backgroundColor: "#392de9",
@@ -66,12 +74,12 @@ const ESTILO = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 8,
-    },
-    buttonText: {
+      },
+      buttonText: {
         color: "#FFF"
-    },
-    caracteres: {
-        fontSize: 30,
-        fontWeight: "bold"
-    }
+      },
+      caracteres:{
+        fontSize:30,
+        fontWeight:"bold"
+      }
 })
